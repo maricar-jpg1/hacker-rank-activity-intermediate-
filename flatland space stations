@@ -1,0 +1,40 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void Main(String[] args)
+    {
+        string[] nm = Console.ReadLine().Split(' ');
+        int n = int.Parse(nm[0]);
+        int m = int.Parse(nm[1]);
+
+        int[] c = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        Array.Sort(c);
+
+        // If every city has a station
+        if (m == n)
+        {
+            Console.WriteLine(0);
+            return;
+        }
+
+        // Max distance initially = distance from city 0 to first station
+        int maxDist = c[0];
+
+        // Check gaps between consecutive stations
+        for (int i = 1; i < m; i++)
+        {
+            int gap = (c[i] - c[i - 1]) / 2;
+            if (gap > maxDist)
+                maxDist = gap;
+        }
+
+        // Also check distance from last station to last city
+        int lastGap = (n - 1) - c[m - 1];
+        if (lastGap > maxDist)
+            maxDist = lastGap;
+
+        Console.WriteLine(maxDist);
+    }
+}
