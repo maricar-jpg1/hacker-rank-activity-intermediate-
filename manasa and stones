@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static List<int> stones(int n, int a, int b)
+    {
+        HashSet<int> results = new HashSet<int>();
+
+        // There are (n-1) differences (since first stone is at position 0)
+        for (int i = 0; i < n; i++)
+        {
+            int value = i * b + (n - 1 - i) * a;
+            results.Add(value);
+        }
+
+        // Return sorted results
+        return results.OrderBy(x => x).ToList();
+    }
+
+    static void Main(string[] args)
+    {
+        int T = Convert.ToInt32(Console.ReadLine().Trim());
+
+        for (int t = 0; t < T; t++)
+        {
+            int n = Convert.ToInt32(Console.ReadLine().Trim());
+            int a = Convert.ToInt32(Console.ReadLine().Trim());
+            int b = Convert.ToInt32(Console.ReadLine().Trim());
+
+            List<int> result = stones(n, a, b);
+
+            Console.WriteLine(string.Join(" ", result));
+        }
+    }
+}
