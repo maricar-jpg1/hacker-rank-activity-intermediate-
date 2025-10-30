@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        List<string> grid = new List<string>();
+
+        for (int i = 0; i < n; i++)
+        {
+            grid.Add(Console.ReadLine());
+        }
+
+        string[] result = CavityMap(grid);
+        foreach (var line in result)
+        {
+            Console.WriteLine(line);
+        }
+    }
+
+    static string[] CavityMap(List<string> grid)
+    {
+        int n = grid.Count;
+        char[,] map = new char[n, n];
+
+        // Convert grid to 2D char array
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                map[i, j] = grid[i][j];
+            }
+        }
+
+        // Mark cavities
+        for (int i = 1; i < n - 1; i++)
+        {
+            for (int j = 1; j < n - 1; j++)
+            {
+                char current = map[i, j];
+                if (current > map[i - 1, j] &&
+                    current > map[i + 1, j] &&
+                    current > map[i, j - 1] &&
+                    current > map[i, j + 1])
+                {
+                    map[i, j] = 'X'; // temporarily mark
+                }
+            }
+        }
+
+        // Build output strings
+        string[] result = new string[n];
+        for (int i = 0; i < n; i++)
+        {
+            char[] row = new char[n];
+            for (int j = 0; j < n; j++)
+            {
+                row[j] = map[i, j];
+            }
+            result[i] = new string(row);
+        }
+
+        return result;
+    }
+}
